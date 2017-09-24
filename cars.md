@@ -6,29 +6,51 @@ Me
 
 ## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
 
 ```r
-summary(cars)
+library(hflights)
+library(dplyr)
 ```
 
 ```
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
+## 
+## Attaching package: 'dplyr'
 ```
 
-## Including Plots
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
 
-You can also embed plots, for example:
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
 
-![](cars_files/figure-html/pressure-1.png)<!-- -->
+```r
+hflights%>%
+  filter(UniqueCarrier=="AA")%>%
+  group_by(Month)%>%
+  summarise(Total_Arr_Delay=sum(ArrDelay,na.rm=T))
+```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```
+## # A tibble: 12 x 2
+##    Month Total_Arr_Delay
+##    <int>           <int>
+##  1     1              18
+##  2     2             461
+##  3     3             317
+##  4     4            1147
+##  5     5            1272
+##  6     6            -262
+##  7     7            -460
+##  8     8           -1417
+##  9     9            -841
+## 10    10             215
+## 11    11              97
+## 12    12            2287
+```
+
